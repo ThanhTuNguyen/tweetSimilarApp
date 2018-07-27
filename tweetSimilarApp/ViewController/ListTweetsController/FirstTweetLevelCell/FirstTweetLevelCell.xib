@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-UI-Display-Medium.otf">
+            <string>SFUIDisplay-Medium</string>
+        </array>
+        <array key="SFUIDisplay-Semibold.ttf">
+            <string>SFUIDisplay-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FirstTweetLevelCell" id="KGk-i7-Jjw" customClass="FirstTweetLevelCell" customModule="tweetSimilarApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="86"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="85.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sfa-a5-cT2" userLabel="Cell">
+                        <rect key="frame" x="8" y="4" width="304" height="77.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="User Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTf-Pq-KMK" userLabel="name">
+                                <rect key="frame" x="8" y="8" width="223" height="16.5"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Semibold" family="SF UI Display" pointSize="14"/>
+                                <color key="textColor" red="0.2666666667" green="0.2901960784" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x79-e2-gUq" userLabel="TimeView">
+                                <rect key="frame" x="239" y="0.0" width="60" height="77.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1/1" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8o-7R-0C9" userLabel="countInfo">
+                                        <rect key="frame" x="0.0" y="33.5" width="60" height="12"/>
+                                        <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="10"/>
+                                        <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="d8o-7R-0C9" firstAttribute="centerY" secondItem="x79-e2-gUq" secondAttribute="centerY" id="kvO-nl-sv2"/>
+                                    <constraint firstAttribute="width" constant="60" id="sJ4-A8-CsW"/>
+                                    <constraint firstItem="d8o-7R-0C9" firstAttribute="leading" secondItem="x79-e2-gUq" secondAttribute="leading" id="uBh-J3-cjm"/>
+                                    <constraint firstAttribute="trailing" secondItem="d8o-7R-0C9" secondAttribute="trailing" id="wc2-Vk-dHR"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Additional info" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CAt-xj-ZWa" userLabel="content">
+                                <rect key="frame" x="8" y="29.5" width="223" height="40"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="12"/>
+                                <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="x79-e2-gUq" secondAttribute="bottom" id="82S-SK-lwA"/>
+                            <constraint firstItem="CAt-xj-ZWa" firstAttribute="leading" secondItem="dTf-Pq-KMK" secondAttribute="leading" id="E1c-ya-pPa"/>
+                            <constraint firstItem="x79-e2-gUq" firstAttribute="top" secondItem="Sfa-a5-cT2" secondAttribute="top" id="MuE-1q-F9p"/>
+                            <constraint firstItem="CAt-xj-ZWa" firstAttribute="top" secondItem="dTf-Pq-KMK" secondAttribute="bottom" constant="5" id="OEh-8k-xxs"/>
+                            <constraint firstItem="dTf-Pq-KMK" firstAttribute="top" secondItem="Sfa-a5-cT2" secondAttribute="top" constant="8" id="QVr-uO-Xt1"/>
+                            <constraint firstAttribute="bottom" secondItem="CAt-xj-ZWa" secondAttribute="bottom" constant="8" id="ZRc-HF-FcU"/>
+                            <constraint firstAttribute="trailing" secondItem="x79-e2-gUq" secondAttribute="trailing" constant="5" id="fG5-kg-Jhr"/>
+                            <constraint firstItem="dTf-Pq-KMK" firstAttribute="leading" secondItem="Sfa-a5-cT2" secondAttribute="leading" constant="8" id="gYa-DW-Gst"/>
+                            <constraint firstItem="x79-e2-gUq" firstAttribute="leading" secondItem="CAt-xj-ZWa" secondAttribute="trailing" constant="8" id="r1V-6q-0Wb"/>
+                            <constraint firstItem="x79-e2-gUq" firstAttribute="leading" secondItem="dTf-Pq-KMK" secondAttribute="trailing" constant="8" id="vSm-01-ehW"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Sfa-a5-cT2" secondAttribute="trailing" constant="8" id="3e6-VR-HG8"/>
+                    <constraint firstAttribute="bottom" secondItem="Sfa-a5-cT2" secondAttribute="bottom" constant="4" id="F24-BC-bps"/>
+                    <constraint firstItem="Sfa-a5-cT2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="RUs-98-aAm"/>
+                    <constraint firstItem="Sfa-a5-cT2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="jCU-aH-t28"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="cellView" destination="Sfa-a5-cT2" id="qnJ-Lm-YGM"/>
+                <outlet property="content" destination="CAt-xj-ZWa" id="fQY-1h-LXv"/>
+                <outlet property="countInfo" destination="d8o-7R-0C9" id="NOe-lB-gV6"/>
+                <outlet property="name" destination="dTf-Pq-KMK" id="q64-tn-O6Z"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
