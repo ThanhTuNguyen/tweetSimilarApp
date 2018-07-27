@@ -15,7 +15,6 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
     @IBOutlet weak var treeView: RATreeView!
     
     var data : listMessages
-    var numberOfTweet : Int
 
     convenience init() {
         self.init(nibName : nil, bundle: nil)
@@ -23,13 +22,11 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         data = ListTweetsViewController.commonInit()
-        self.numberOfTweet = 0
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     required init?(coder aDecoder: NSCoder) {
         data = ListTweetsViewController.commonInit()
-        self.numberOfTweet = 0
         super.init(coder: aDecoder)
     }
     
@@ -38,8 +35,6 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        self.numberOfTweet = 0
         
         self.navigationController?.navigationBar.isHidden = false
         
@@ -96,7 +91,6 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
             {
                 data.addList(mymessages)
                 self.treeView.reloadData();
-                numberOfTweet = 0
                 let encoder = JSONEncoder()
                 let saveData = try! encoder.encode(data)
                 UserDefaults.standard.set(saveData, forKey: "UserTweetApp")
@@ -127,9 +121,8 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
         let backgroundColor: UIColor
         if(level == 0)
         {
-            self.numberOfTweet += 1
             backgroundColor = UIColor(red: 247.0/255.0, green: 247.0/255.0, blue: 247.0/255.0, alpha: 1.0)
-            cell.name.text = "Tweet Number \(numberOfTweet)"
+            cell.name.text = "Tweet Number \(dataObject.parentIndex! + 1)"
             cell.countInfo.text = "\(dataObject.allMessages.count)"
             cell.content.text = "There are \(dataObject.allMessages.count) message(s)"
         }
@@ -158,20 +151,23 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
         guard editingStyle == .delete else { return; }
         let item = item as! messages
         
-        let dataObject = item
+        let parent = treeView.parent(forItem: item) as? messages
         
-        let level = self.treeView.levelForCell(forItem: item as Any)
-        if(level == 0)
-        {
-            data.removeChild(dataObject)
-        }
-        else
-        {
-            data.list[dataObject.parentIndex].removeChild(dataObject)
+        let index: Int
+        if let parent = parent {
+            index = parent.allMessages.index(where: { dataObject in
+                return dataObject === item
+            })!
+            parent.removeChild(item)
+            
+        } else {
+            index = self.data.list.index(where: { dataObject in
+                return dataObject === item;
+            })!
+            self.data.list.remove(at: index)
         }
         
         self.treeView.reloadData();
-        numberOfTweet = 0
         let encoder = JSONEncoder()
         let saveData = try! encoder.encode(data)
         UserDefaults.standard.set(saveData, forKey: "UserTweetApp")
