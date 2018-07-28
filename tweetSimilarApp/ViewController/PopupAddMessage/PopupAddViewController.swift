@@ -72,18 +72,6 @@ class PopupAddViewController: UIViewController {
         self.removeAnimate()
     }
     
-//    func textView(_ textView: UITextView,
-//                           shouldChangeTextIn range: NSRange,
-//                           replacementText text: String) -> Bool
-//    {
-//        if(text == "\n")
-//        {
-//            return false
-//        }
-//        return true
-//    }
-    
-
 }
 
 extension PopupAddViewController: UITextViewDelegate

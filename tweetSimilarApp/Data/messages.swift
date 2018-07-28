@@ -89,7 +89,7 @@ class messages : Codable
     func removeChild(_ child : messages) {
         self.allMessages = self.allMessages.filter( {$0 !== child})
     }
-    
+
     func initMessage(longMessage: String)
     {
         if(self.isValid == true)
@@ -105,6 +105,8 @@ class messages : Codable
             var i = 0
             var message = ""
             var nextMesageCount = 0
+            var countAllMessages = 1
+            var currentIndex = 0
             
             while i < countWord
             {
@@ -112,12 +114,26 @@ class messages : Codable
                 i += 1
                 if(i >= countWord)
                 {
-                    self.allMessages.append(messages(validMessage: message,parentIndex: self.parentIndex))
-                    break
+                    self.allMessages.append(messages(validMessage: message, parentIndex: self.parentIndex))
+                    currentIndex += 1
+                    if(String(currentIndex).count > countAllMessages)
+                    {
+                        countAllMessages = String(allMessages.count).count
+                        // reset process
+                        i = 0
+                        message = ""
+                        nextMesageCount = 0
+                        self.allMessages.removeAll()
+                        currentIndex = 1
+                    }
+                    else
+                    {
+                        break
+                    }
                 }
-                nextMesageCount = message.count + stringArr[i].count + 1
+                nextMesageCount = message.count + stringArr[i].count + 3 + countAllMessages  + String(currentIndex).count
                 
-                while nextMesageCount <= 46
+                while nextMesageCount <= 50
                 {
                     message = message + " \(stringArr[i])"
                     i += 1
@@ -125,19 +141,28 @@ class messages : Codable
                     {
                         break
                     }
-                    nextMesageCount = message.count + stringArr[i].count + 1
+                    nextMesageCount = message.count + stringArr[i].count + 3 + countAllMessages  + String(currentIndex).count
                 }
                 self.allMessages.append(messages(validMessage: message, parentIndex: self.parentIndex))
+                currentIndex += 1
+//              print("current index: \(currentIndex)")
+                if(String(currentIndex).count > countAllMessages)
+                {
+                    countAllMessages = String(allMessages.count).count
+                    // reset process
+                    i = 0
+                    message = ""
+                    nextMesageCount = 0
+                    self.allMessages.removeAll()
+                    currentIndex = 0
+                }
             }
-            
             i = 0
-            
             while i < self.allMessages.count
             {
                 self.allMessages[i].content = "\(i + 1)" + "\\" + "\(self.allMessages.count) " + self.allMessages[i].content
                 i = i + 1
             }
-            
         }
     }
     
