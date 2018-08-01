@@ -67,6 +67,7 @@ class messages : Codable
     var isValid : Bool!
     var content : String
     var parentIndex : Int!
+    var errorMessage : String!
     var allMessages : [messages]
     
     init(firstMessage: String, parentIndex: Int)
@@ -74,7 +75,8 @@ class messages : Codable
         self.allMessages = [messages]()
         self.parentIndex = parentIndex
         self.content = ""
-        self.isValid = checkValidCharacter(longString: firstMessage)
+        self.isValid = true
+        self.errorMessage = ""
         self.initMessage(longMessage: firstMessage)
     }
     
@@ -82,35 +84,35 @@ class messages : Codable
     {
         self.allMessages = [messages]()
         self.content = messageValid
-        self.isValid = checkValidCharacter(longString: messageValid)
         self.parentIndex = parentIndex
     }
     
     func removeChild(_ child : messages) {
         self.allMessages = self.allMessages.filter( {$0 !== child})
     }
-
+    
     func initMessage(longMessage: String)
     {
-        if(self.isValid == true)
+        if(longMessage.count <= 50)
         {
-            if(longMessage.count <= 50)
-            {
-                self.allMessages.append(messages(validMessage: longMessage, parentIndex: self.parentIndex))
-                return
-            }
-            let stringArr = longMessage.components(separatedBy: " ")
-            let countWord = stringArr.count
-            
-            var i = 0
-            var message = ""
-            var nextMesageCount = 0
-            var countAllMessages = 1
-            var currentIndex = 0
-            
-            while i < countWord
+            self.allMessages.append(messages(validMessage: longMessage, parentIndex: self.parentIndex))
+            return
+        }
+        let stringArr = longMessage.components(separatedBy: " ")
+        let countWord = stringArr.count
+        
+        var i = 0
+        var message = ""
+        var nextMesageCount = 0
+        var countAllMessages = 1
+        var currentIndex = 0
+        
+        while i < countWord
+        {
+            if(stringArr[i].count + 2 + countAllMessages + String(currentIndex + 1).count <= 50)
             {
                 message = stringArr[i]
+                
                 i += 1
                 if(i >= countWord)
                 {
@@ -124,7 +126,20 @@ class messages : Codable
                         message = ""
                         nextMesageCount = 0
                         self.allMessages.removeAll()
-                        currentIndex = 1
+                        currentIndex = 0
+                        
+                        //                        print("break 1")
+                        if(stringArr[i].count + 2 + countAllMessages + String(currentIndex + 1).count <= 50)
+                        {
+                            message = stringArr[i]
+                            i += 1
+                        }
+                        else
+                        {
+                            isValid = false
+                            self.errorMessage = stringArr[i]
+                            return
+                        }
                     }
                     else
                     {
@@ -135,17 +150,26 @@ class messages : Codable
                 
                 while nextMesageCount <= 50
                 {
-                    message = message + " \(stringArr[i])"
-                    i += 1
-                    if(i >= countWord)
+                    if(stringArr[i].count + 2 + countAllMessages + String(currentIndex + 1).count <= 50)
                     {
-                        break
+                        message = message + " \(stringArr[i])"
+                        //                        print(message)
+                        i += 1
+                        if(i >= countWord)
+                        {
+                            break
+                        }
+                        nextMesageCount = message.count + stringArr[i].count + 3 + countAllMessages  + String(currentIndex).count
                     }
-                    nextMesageCount = message.count + stringArr[i].count + 3 + countAllMessages  + String(currentIndex).count
+                    else
+                    {
+                        isValid = false
+                        self.errorMessage = stringArr[i]
+                        return
+                    }
                 }
                 self.allMessages.append(messages(validMessage: message, parentIndex: self.parentIndex))
                 currentIndex += 1
-//              print("current index: \(currentIndex)")
                 if(String(currentIndex).count > countAllMessages)
                 {
                     countAllMessages = String(allMessages.count).count
@@ -157,28 +181,19 @@ class messages : Codable
                     currentIndex = 0
                 }
             }
-            i = 0
-            while i < self.allMessages.count
+            else
             {
-                self.allMessages[i].content = "\(i + 1)" + "\\" + "\(self.allMessages.count) " + self.allMessages[i].content
-                i = i + 1
+                isValid = false
+                self.errorMessage = stringArr[i]
+                return
             }
+        }
+        i = 0
+        while i < self.allMessages.count
+        {
+            self.allMessages[i].content = "\(i + 1)" + "\\" + "\(self.allMessages.count) " + self.allMessages[i].content
+            i = i + 1
         }
     }
     
-    func checkValidCharacter(longString: String) -> Bool
-    {
-        let stringArr = longString.components(separatedBy: " ")
-        let n = stringArr.count
-        var i = 0
-        while i < n
-        {
-            if(stringArr[i].count > 46)
-            {
-                return false
-            }
-            i += 1
-        }
-        return true
-    }
 }
