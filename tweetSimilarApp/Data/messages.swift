@@ -77,7 +77,8 @@ class messages : Codable
         self.content = ""
         self.isValid = true
         self.errorMessage = ""
-        self.initMessage(longMessage: firstMessage)
+        let trimmedString = firstMessage.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.initMessage(longMessage: trimmedString)
     }
     
     init(validMessage messageValid: String, parentIndex: Int)
