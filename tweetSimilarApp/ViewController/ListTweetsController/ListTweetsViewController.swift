@@ -50,7 +50,7 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
         self.treeView.setNeedsLayout()
         self.treeView.layoutIfNeeded()
         
-//        self.treeView.separatorStyle = RATreeViewCellSeparatorStyleNone
+        self.treeView.separatorStyle = RATreeViewCellSeparatorStyleNone
         self.treeView.backgroundColor = .clear
 
         view.backgroundColor = .clear
@@ -78,6 +78,14 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
             return self.data.list.count
         }
     }
+    
+    func treeView(_ treeView: RATreeView, child index: Int, ofItem item: Any?) -> Any {
+        if let item = item as? messages {
+            return item.allMessages[index]
+        } else {
+            return self.data.list[index] as AnyObject
+        }
+    }
 
     func didFinish(_ message: String) {
         NSLog(message)
@@ -96,7 +104,7 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
             }
             else
             {
-                let alert = UIAlertController(title: "Error", message: "Seem to be your \"\(mymessages.errorMessage)\" have a \"non whitespace\" more than 50 characters", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Error", message: "Seem to be your \"\(String(describing: mymessages.errorMessage))\" have a \"non whitespace\" more than 50 characters", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 self.present(alert, animated: true)
             }
@@ -138,13 +146,7 @@ class ListTweetsViewController: UIViewController, RATreeViewDelegate, RATreeView
         return cell
     }
 
-    func treeView(_ treeView: RATreeView, child index: Int, ofItem item: Any?) -> Any {
-        if let item = item as? messages {
-            return item.allMessages[index]
-        } else {
-            return self.data.list[index] as AnyObject
-        }
-    }
+
     
     func treeView(_ treeView: RATreeView, commit editingStyle: UITableViewCellEditingStyle, forRowForItem item: Any) {
         guard editingStyle == .delete else { return; }
@@ -199,7 +201,7 @@ private extension ListTweetsViewController {
         }
         else
         {
-            NSLog("\(mymessages.errorMessage)" )
+            NSLog("\(String(describing: mymessages.errorMessage))" )
         }
 //
         return myList
