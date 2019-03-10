@@ -18,5 +18,6 @@ target 'tweetSimilarApp' do
   end
 
   pod 'RATreeView', '~> 2.1'
+  pod 'ReachabilitySwift', '~> 4.2'
 
 end
